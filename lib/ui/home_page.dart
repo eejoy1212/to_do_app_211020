@@ -1,6 +1,8 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, duplicate_ignore
+// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, duplicate_ignore, unused_import
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:to_do_app_211020/services/notification_services.dart';
 import 'package:to_do_app_211020/services/theme_services.dart';
 import 'package:to_do_app_211020/ui/theme.dart';
 
@@ -12,6 +14,16 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  // ignore: prefer_typing_uninitialized_variables
+  var notifyHelper;
+  @override
+  void initState() {
+    super.initState();
+    var notifyHelper = NotifyHelper();
+    notifyHelper.initializeNotification();
+    notifyHelper.requestIOSPermissions();
+  }
+
   @override
   Widget build(BuildContext context) {
     // ignore: prefer_const_constructors
@@ -34,16 +46,24 @@ _appBar() {
     leading: GestureDetector(
       onTap: () {
         ThemeService().switchTheme();
+        //notifyHelper = NotifyHelper(); 왜 안되지...?
+        NotifyHelper().displayNotification(
+          title: '테마 체인지',
+          body: Get.isDarkMode ? '화이트모드 활성화' : '다크모드 활성화',
+        );
+        NotifyHelper().scheduledNotification();
       },
       child: Icon(
-        Icons.nightlight_round,
+        Get.isDarkMode ? Icons.wb_sunny_outlined : Icons.nightlight_round,
         size: 20,
+        color: Get.isDarkMode ? Colors.white : Colors.black,
       ),
     ),
     actions: [
-      Icon(
-        Icons.person,
-        size: 20,
+      CircleAvatar(
+        backgroundImage: AssetImage(
+          'assets/images/profile.jpg',
+        ),
       ),
       SizedBox(width: 20)
     ],
