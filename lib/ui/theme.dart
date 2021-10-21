@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 const Color blushcolor = Color(0xFF4e5ae8);
 const Color yellowcolor = Color(0xFFFFB746);
@@ -35,4 +36,12 @@ class Themes {
     primaryColor: Colors.black,
     brightness: Brightness.dark,
   );
+  TextStyle get subHeadingStyle {
+    return GoogleFonts.lato(
+        // ignore: prefer_const_constructors
+        textStyle: TextStyle(
+      fontSize: 24,
+      fontWeight: FontWeight.bold,
+    ));
+  }
 }
