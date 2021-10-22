@@ -7,6 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:to_do_app_211020/services/notification_services.dart';
 import 'package:to_do_app_211020/services/theme_services.dart';
+import 'package:to_do_app_211020/ui/add_task_bar.dart';
 import 'package:to_do_app_211020/ui/theme.dart';
 import 'package:to_do_app_211020/ui/widgets/button.dart';
 
@@ -19,6 +20,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   // ignore: prefer_typing_uninitialized_variables
+  DateTime _selectedDate = DateTime.now();
   var notifyHelper;
   @override
   void initState() {
@@ -32,35 +34,14 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     // ignore: prefer_const_constructors
     return Scaffold(
-      appBar: _appBar(),
+      appBar: _appBar(context),
       body: Column(
         children: [
           _addTaskBar(),
-          Container(
-            child: DatePicker(DateTime.now()),
-          ),
+          _addDateBar(),
         ],
       ),
     );
-  }
-
-//나중에 theme.dart로 옮기기
-  TextStyle get subHeadingStyle {
-    return GoogleFonts.lato(
-        // ignore: prefer_const_constructors
-        textStyle: TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-            color: Get.isDarkMode ? Colors.grey[400] : Colors.grey));
-  }
-
-  TextStyle get headingStyle {
-    return GoogleFonts.lato(
-        // ignore: prefer_const_constructors
-        textStyle: TextStyle(
-            fontSize: 30,
-            fontWeight: FontWeight.bold,
-            color: Get.isDarkMode ? Colors.white : Colors.black));
   }
 
   _addTaskBar() {
@@ -82,15 +63,50 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
           ),
-          MyButton(label: '+ 할 일 추가', onTap: () => print('할 일 : 밥먹기'))
+          MyButton(
+            label: '+ 할 일 추가',
+            onTap: () => Get.to(
+              () => AddTaskPage(),
+            ),
+          ),
         ],
       ),
     );
   }
 
-  //나중에 theme.dart로 옮기기
-  _appBar() {
+  _addDateBar() {
+    return Container(
+      margin: EdgeInsets.only(top: 20, left: 20),
+      child: DatePicker(
+        DateTime.now(),
+        height: 100,
+        width: 80,
+        initialSelectedDate: DateTime.now(),
+        selectionColor: primaryclr,
+        selectedTextColor: Colors.white,
+        dateTextStyle: GoogleFonts.lato(
+          textStyle: TextStyle(
+              fontSize: 20, fontWeight: FontWeight.w600, color: Colors.grey),
+        ),
+        dayTextStyle: GoogleFonts.lato(
+          textStyle: TextStyle(
+              fontSize: 16, fontWeight: FontWeight.w600, color: Colors.grey),
+        ),
+        monthTextStyle: GoogleFonts.lato(
+          textStyle: TextStyle(
+              fontSize: 14, fontWeight: FontWeight.w600, color: Colors.grey),
+        ),
+        onDateChange: (date) {
+          _selectedDate = date;
+        },
+      ),
+    );
+  }
+
+  _appBar(BuildContext context) {
     return AppBar(
+      elevation: 0,
+      backgroundColor: context.theme.backgroundColor,
       leading: GestureDetector(
         onTap: () {
           ThemeService().switchTheme();

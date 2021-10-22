@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
+import 'package:to_do_app_211020/ui/add_task_bar.dart';
+import 'package:to_do_app_211020/ui/widgets/button.dart';
 
 const Color blushcolor = Color(0xFF4e5ae8);
 const Color yellowcolor = Color(0xFFFFB746);
@@ -36,12 +40,42 @@ class Themes {
     primaryColor: Colors.black,
     brightness: Brightness.dark,
   );
-  TextStyle get subHeadingStyle {
-    return GoogleFonts.lato(
-        // ignore: prefer_const_constructors
-        textStyle: TextStyle(
-      fontSize: 24,
-      fontWeight: FontWeight.bold,
-    ));
-  }
+}
+
+//나중에 theme.dart로 옮기기
+TextStyle get subHeadingStyle {
+  return GoogleFonts.lato(
+      // ignore: prefer_const_constructors
+      textStyle: TextStyle(
+          fontSize: 24,
+          fontWeight: FontWeight.bold,
+          color: Get.isDarkMode ? Colors.grey[400] : Colors.grey));
+}
+
+TextStyle get headingStyle {
+  return GoogleFonts.lato(
+      // ignore: prefer_const_constructors
+      textStyle: TextStyle(
+          fontSize: 30,
+          fontWeight: FontWeight.bold,
+          color: Get.isDarkMode ? Colors.white : Colors.black));
+}
+
+//나중에 theme.dart로 옮기기
+TextStyle get titleStyle {
+  return GoogleFonts.lato(
+      textStyle: TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.w400,
+          color: Get.isDarkMode ? Colors.white : Colors.black));
+}
+
+TextStyle get subTitleStyle {
+  return GoogleFonts.lato(
+    textStyle: TextStyle(
+      fontSize: 14,
+      fontWeight: FontWeight.w400,
+      color: Get.isDarkMode ? Colors.grey[100] : Colors.grey[600],
+    ),
+  );
 }
